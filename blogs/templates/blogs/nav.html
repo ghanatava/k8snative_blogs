@@ -11,6 +11,11 @@
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
                 <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+                <form class="d-flex" method = post action ="{% url 'search' %}" >
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">

@@ -77,3 +77,14 @@ def about(request):
     return render(request,"blogs/about.html",{
         "title":"about"
     })
+
+def search_view(request):   
+    if request.method=="POST":
+        searched=request.POST['searched']
+        user_posts=Post.objects.filter(author__username__contains=searched)
+        return render(request,'blogs/search_venue.html',{
+            'searched':searched,
+            'user_posts':user_posts
+        })
+    else:
+        return render(request,'blogs/search_venue.html')
