@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blogs/',include("blogs.urls")),
     path('register/', include("users.urls")),
-    path('chat/',include("chat.urls")),
+  
 ]
 
 urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATICFILES_DIRS)
