@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deplyment
+metadata:
+  name: blogs-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: blogs
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      label:
+        - app: blogs
+    spec:
+      containers:
+        - name: blogs-pod
+          image: ghanatava/blogs
+          envFrom:
+            - configMapRef:
+              name: blogs-config
+          ports:
+            - containerPort: 8000
+        
+        - name: redis-pod
+          image: redis
+          envFrom: 
+            - configMapRef:
+              name: blogs-config
+
+---
+
