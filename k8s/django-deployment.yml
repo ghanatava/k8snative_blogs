@@ -1,9 +1,11 @@
 apiVersion: apps/v1
-kind: Deplyment
+kind: Deployment
 metadata:
   name: blogs-deployment
+  labels:
+    app: blogs
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: blogs
@@ -15,23 +17,29 @@ spec:
       maxSurge: 1
   template:
     metadata:
-      label:
-        - app: blogs
+      labels:
+        app: blogs
     spec:
       containers:
         - name: blogs-pod
-          image: ghanatava/blogs
+          image: gcr.io/esoteric-sled-400504/blogs:latest
           envFrom:
             - configMapRef:
-              name: blogs-config
+                name: blogs-config
           ports:
             - containerPort: 8000
-        
-        - name: redis-pod
-          image: redis
-          envFrom: 
-            - configMapRef:
-              name: blogs-config
-
 ---
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: blogs-svc
+spec:
+  selector:
+    app: blogs
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
+                              
