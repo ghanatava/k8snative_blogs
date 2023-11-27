@@ -20,6 +20,11 @@ spec:
       labels:
         app: blogs
     spec:
+      initContainers:
+      - name: wait-for-postgres
+        image: busybox  
+        command: ['sh', '-c', 'until nc -z postgresql-svc 5432; do sleep 1; done;']
+
       containers:
         - name: blogs-pod
           image: gcr.io/esoteric-sled-400504/blogs:v1
@@ -28,15 +33,6 @@ spec:
                 name: blogs-config
           ports:
             - containerPort: 8000
-          readinessProbe:
-            exec:
-              command:
-                - sh
-                - c
-                - |
-                  timeout 1 bash -c "echo > /dev/tcp/postgresql-svc/5432" && "Connection Successful"
-            initialDelaySeconds: 15
-            failureThreshold: 3
 ---
 
 apiVersion: v1
