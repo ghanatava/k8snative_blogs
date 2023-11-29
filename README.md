@@ -51,3 +51,8 @@ How to run:
       
    * Install the chart by \
      `helm install <release-name> helm/blogs`
+
+  How to contribute ?
+  1. fork the repo
+  2. create a new branch for your new feature
+  3. DO NOT WORK ON MAIN BRANCH!!!
