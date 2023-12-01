@@ -28,9 +28,11 @@ jobs:
         with:
           version: '>= 363.0.0'
 
-      - name: Build and Push
-        run: |
-          docker buildx build --file $DOCKER_FILE_PATH --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${IMAGE_NAME} .
-          docker buildx imagetools inspect gcr.io/${{ secrets.GCP_PROJECT_ID }}/${IMAGE_NAME}
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${IMAGE_NAME}
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+            context: ./
+            file: ./Dockerfile
+            push: true
+            tags: gcr.io/${{ secrets.PROJECT_ID }}/blogs:v1
 
