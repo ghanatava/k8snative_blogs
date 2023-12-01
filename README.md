@@ -1,9 +1,14 @@
-# blogs_corey
+# blogs
 
 This is a simple blogging website built on django which I use to pactice DevOps concepts like 
 1. CI/CD 
 2. Containerisation
 3. Kubernetes package management using Helm
+
+The website is made using :
+1. Django
+2. Postgres
+3. Redis 
 
 How to run:
 1. Using Docker
@@ -23,25 +28,31 @@ How to run:
       REDIS_PORT
       REDIS_HOST
       ```
-   * Then use the following docker-compose command
+   * Then use the following docker-compose command \
      `$ docker compose up`
 
-2. Using your local development environment.
-   * Install the required dependencies 
-     `pip install -r requirements.txt`
+2. Using your local development environment. 
+   * Install the required dependencies \
+     `pip install -r requirements.txt` 
    
-   * Run the development server by 
+   * Run the development server by \
      `python3 manage.py runserver`  
 
-3. To try out deployment on GKE using helm
-   * Override the configuration in helm/blogs/templates/values.yaml
-   * Label the storage class standard 
+3. To try out deployment on GKE using helm 
+   * Override the configuration in helm/blogs/templates/values.yaml 
+   * Label the storage class standard \
      `kubectl label sc standard app.kubernetes.io/managed-by=Helm`
    
-   * Annotate the storage class by 
-     `kubectl annotate sc standard meta.helm.sh/release-name=<release-name>`
+   * Annotate the storage class by \
+     `kubectl annotate sc standard meta.helm.sh/release-name=<release-name>` \
      `kubectl annotate sc standard meta.helm.sh/release-namespace=default` 
-      //you can change the release-namespace to your namespace
+     
+      you can change the release-namespace to your namespace
       
-   * Install the chart by 
+   * Install the chart by \
      `helm install <release-name> helm/blogs`
+
+  How to contribute ?
+  1. fork the repo
+  2. create a new branch for your new feature
+  3. DO NOT WORK ON MAIN BRANCH!!!
