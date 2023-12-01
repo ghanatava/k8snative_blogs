@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     env:
       IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/blogs:v1
       DOCKER_FILE_PATH: ./Dockerfile
