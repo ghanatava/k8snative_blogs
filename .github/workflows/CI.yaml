@@ -15,20 +15,25 @@ jobs:
       - name: Authenticate with Google Cloud 
         uses: 'google-github-actions/auth@v1'
         with: 
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: ${{ secrets.GCP_CI_KEY }}
       
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
           version: '>= 363.0.0'
 
-      - name: Build and Push Docker image
-        uses: docker/build-push-action@v2
-        with:
-            context: ./
-            file: ./Dockerfile
-            push: true
-            tags: gcr.io/esoteric-sled-400504/blogs:v1
+      - name: Build docker image
+        run: |
+          docker build . -t gcr.io/esoteric-sled-400504/blogs:v1
+
+      - name: configur docker client
+        run: |
+          gcloud auth configure-docker --quiet
+
+      - name:
+        run: |
+          docker push gcr.io/esoteric-sled-400504/blogs:v1
+
 
 
 
