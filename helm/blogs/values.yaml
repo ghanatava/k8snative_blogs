@@ -103,7 +103,7 @@ database:
   port: 5432
 
 django:
-  replicas: 3
+  replicas: 5
   minReadySeconds: 10
 
 redis:
