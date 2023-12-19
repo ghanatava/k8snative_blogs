@@ -5,5 +5,21 @@ SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL:-"admin@admin.com"}
 
 cd /app/
 
-python manage.py migrate --noinput
-(echo "from django.contrib.auth.models import User; User.objects.create_superuser($DJANGO_SUPERUSER_NAME,$SUPERUSER_EMAIL,$DJANGO_SUPERUSER_PASSWORD)" | python3 manage.py shell) || true
+python3 manage.py migrate --noinput
+python3 manage.py shell <<EOF
+import os
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')  # Replace 'your_project.settings' with your actual settings module
+
+django.setup()
+
+from django.contrib.auth.models import User
+
+# Check if the superuser exists
+if not User.objects.filter(username='admin').exists():
+    User.objects.create_superuser('admin', 'admin@example.com', 'your_password')
+    print('Superuser created successfully!')
+else:
+    print('Superuser already exists.')
+EOF
